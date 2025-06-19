@@ -10,11 +10,16 @@ public partial class Player : CharacterBody2D
 	[Export]
 	public PackedScene Bullet;
 
+	private Vector2 syncPosition = new Vector2(0, 0);
+	private float syncGunRotation = 0;
+
+	private const float LERP_FACTOR = 0.22f;
+
 	public override void _Ready()
 	{
 		// In Godot, node name is a unique identifier
 		GetNode<MultiplayerSynchronizer>("PlayerMultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse(Name));
-    }
+	}
 
 
 	public override void _PhysicsProcess(double delta)
@@ -38,10 +43,7 @@ public partial class Player : CharacterBody2D
 
 			if (Input.IsActionJustPressed("fire"))
 			{
-				Node2D b = Bullet.Instantiate<Node2D>();
-				b.RotationDegrees = GetNode<Node2D>("GunRotation").RotationDegrees;
-				b.GlobalPosition = GetNode<Node2D>("GunRotation/BulletSpawn").GlobalPosition;
-				GetTree().Root.AddChild(b);
+				Rpc("fire");
 			}
 
 
@@ -61,6 +63,28 @@ public partial class Player : CharacterBody2D
 
 			Velocity = velocity;
 			MoveAndSlide();
+
+			syncPosition = GlobalPosition;
+			syncGunRotation = GetNode<Node2D>("GunRotation").RotationDegrees;
 		}
+		else
+		{
+			GlobalPosition = GlobalPosition.Lerp(syncPosition, LERP_FACTOR);
+			GetNode<Node2D>("GunRotation").RotationDegrees = Mathf.Lerp(GetNode<Node2D>("GunRotation").RotationDegrees, syncGunRotation, LERP_FACTOR);
+		}
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+	private void fire()
+	{
+		Node2D b = Bullet.Instantiate<Node2D>();
+		b.RotationDegrees = GetNode<Node2D>("GunRotation").RotationDegrees;
+		b.GlobalPosition = GetNode<Node2D>("GunRotation/BulletSpawn").GlobalPosition;
+		GetTree().Root.AddChild(b);
+	}
+
+	public void setupPlayer(string name)
+	{
+		GetNode<Label>("Label").Text = name;
 	}
 }

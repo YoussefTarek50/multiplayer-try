@@ -15,6 +15,7 @@ public partial class SceneManager : Node2D
 			Player currentPlayer = playerScene.Instantiate<Player>();
 			// Set node name of the player in Godot (unique identifier)
 			currentPlayer.Name = item.Id.ToString();
+			currentPlayer.setupPlayer(item.Name);
 			AddChild(currentPlayer);
 
 			foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("PlayerSpawnPoints"))

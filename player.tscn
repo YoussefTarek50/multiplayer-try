@@ -59,10 +59,10 @@ animations = [{
 size = Vector2(30, 41)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hqtel"]
-properties/0/path = NodePath(".:position")
+properties/0/path = NodePath(".:syncPosition")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("GunRotation:rotation")
+properties/1/path = NodePath(".:syncGunRotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
@@ -95,4 +95,14 @@ texture = ExtResource("3_sweqy")
 position = Vector2(51.0024, -0.871249)
 
 [node name="PlayerMultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.1
+delta_interval = 0.1
 replication_config = SubResource("SceneReplicationConfig_hqtel")
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+offset_left = -24.0
+offset_top = -63.0
+offset_right = 25.0
+offset_bottom = -40.0
+text = "Player"

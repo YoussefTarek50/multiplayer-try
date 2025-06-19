@@ -17,7 +17,7 @@ public partial class Bullet : CharacterBody2D
 	{
 		Vector2 velocity = Velocity;
 
-		velocity = Speed * direction; 
+		velocity = Speed * direction;
 
 		// Add the gravity.
 		if (!IsOnFloor())
@@ -25,9 +25,14 @@ public partial class Bullet : CharacterBody2D
 			velocity += GetGravity() * (float)delta;
 		}
 
-		
+
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+
+	private void _on_bullet_timer_timeout()
+	{
+		QueueFree();
 	}
 }

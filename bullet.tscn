@@ -17,3 +17,9 @@ texture = ExtResource("2_v8qja")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(6, -1.5)
 shape = SubResource("RectangleShape2D_2b2rl")
+
+[node name="BulletTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="BulletTimer" to="." method="_on_bullet_timer_timeout"]
