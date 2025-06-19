@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://xuaoew1b2hqb"]
+[gd_scene load_steps=14 format=3 uid="uid://xuaoew1b2hqb"]
 
 [ext_resource type="Script" uid="uid://r61gwbkuvgxd" path="res://Player.cs" id="1_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://caknbthve5tds" path="res://Assets/Main Character - Male - Full spritesheet - No Guide.png" id="2_hqtel"]
@@ -58,6 +58,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_urp6f"]
 size = Vector2(30, 41)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hqtel"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(0, -1)
 script = ExtResource("1_i3pqv")
@@ -85,3 +90,6 @@ texture = ExtResource("3_sweqy")
 
 [node name="BulletSpawn" type="Node2D" parent="GunRotation"]
 position = Vector2(51.0024, -0.871249)
+
+[node name="PlayerMultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_hqtel")
