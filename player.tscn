@@ -1,0 +1,87 @@
+[gd_scene load_steps=13 format=3 uid="uid://xuaoew1b2hqb"]
+
+[ext_resource type="Script" uid="uid://r61gwbkuvgxd" path="res://Player.cs" id="1_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://caknbthve5tds" path="res://Assets/Main Character - Male - Full spritesheet - No Guide.png" id="2_hqtel"]
+[ext_resource type="PackedScene" uid="uid://baypls8vd31wc" path="res://bullet.tscn" id="2_sweqy"]
+[ext_resource type="Texture2D" uid="uid://dpaxdm3rcl881" path="res://Assets/Famas.png" id="3_sweqy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hs0m"]
+atlas = ExtResource("2_hqtel")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jxqw"]
+atlas = ExtResource("2_hqtel")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dw050"]
+atlas = ExtResource("2_hqtel")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b26j0"]
+atlas = ExtResource("2_hqtel")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n7ghd"]
+atlas = ExtResource("2_hqtel")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvl01"]
+atlas = ExtResource("2_hqtel")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ivps1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2hs0m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jxqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dw050")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b26j0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n7ghd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvl01")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_urp6f"]
+size = Vector2(30, 41)
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(0, -1)
+script = ExtResource("1_i3pqv")
+Bullet = ExtResource("2_sweqy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-1.90735e-06, -37)
+scale = Vector2(2.28125, 2.34375)
+sprite_frames = SubResource("SpriteFrames_ivps1")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -19.5)
+shape = SubResource("RectangleShape2D_urp6f")
+
+[node name="GunRotation" type="Node2D" parent="."]
+position = Vector2(1, -20)
+rotation = -0.00252446
+
+[node name="Sprite2D" type="Sprite2D" parent="GunRotation"]
+position = Vector2(37, 0)
+scale = Vector2(0.333333, 0.309896)
+texture = ExtResource("3_sweqy")
+
+[node name="BulletSpawn" type="Node2D" parent="GunRotation"]
+position = Vector2(51.0024, -0.871249)
